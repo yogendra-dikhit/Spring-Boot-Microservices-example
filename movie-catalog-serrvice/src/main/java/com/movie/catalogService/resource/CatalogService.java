@@ -39,11 +39,11 @@ public class CatalogService {
 					return new CatalogItem(movie.getName(), "DESC",rating.getRating());
 				}).collect(Collectors.toList());*/
 		//RestTemplate Implementation
-		UserRatingWrapper ratingList= restTemplate.getForObject("http://localhost:8083/ratingdata/users/"+userId, UserRatingWrapper.class);
+		UserRatingWrapper ratingList= restTemplate.getForObject("http://rating-data-service/ratingdata/users/"+userId, UserRatingWrapper.class);
 		return ratingList.getRatingList()
 				.stream()
 				.map(rating ->{
-					Movie movie = restTemplate.getForObject("http://localhost:8082/movies/"+rating.getMovieId(), Movie.class);
+					Movie movie = restTemplate.getForObject("http://movie-info-service/movies/"+rating.getMovieId(), Movie.class);
 					return new CatalogItem(movie.getName(), "DESC",rating.getRating());
 				}).collect(Collectors.toList()) ;
 	}
